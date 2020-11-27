@@ -1,0 +1,23 @@
+{
+  "name": "rails5-cookie-parser",
+  "version": "1.0.1",
+  "description": "Rails 5 cookie parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "rails",
+    "rails5",
+    "cookie",
+    "parser"
+  ],
+  "author": "Arnaud 'red' Rouyer",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^8.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
+  }
+}
