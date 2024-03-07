@@ -45,3 +45,16 @@ describe('#decipherSessionData', function () {
     expect(session_data['session_id']).to.equal('033ff410bb681720bfd4d03962111b39')
   })
 })
+
+describe('bakeCookie', () => {
+  const bakeCookie = require('../index.js').bakeCookie
+  it('goes both ways', () => {
+    const test = { current_user_uuid: 'Try me, fool' }
+    const cookieTest = bakeCookie(test)
+
+    const resultDecipher = decipherCookies(cookieTest)
+    const result = decipherSessionData(resultDecipher)
+
+    expect(test.current_user_uuid).to.equal(result.current_user_uuid)
+  })
+})

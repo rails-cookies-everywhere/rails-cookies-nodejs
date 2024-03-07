@@ -67,9 +67,25 @@ const decipherRailCookies = (req, res, next) => {
   return next();
 }
 
+const bakeCookie = (jsonData) => {
+  const messageBuffer = Buffer.from(JSON.stringify(jsonData), 'utf-8').toString('base64')
+  const message = JSON.stringify({ _rails: { message: messageBuffer } })
+
+  const iv = Buffer.from(crypto.randomBytes(12), 'base64')
+  const cipher = crypto.createCipheriv('aes-256-gcm', SECRET_KEY, iv)
+  let enc = cipher.update(message, 'utf8', 'base64')
+  enc += cipher.final('base64')
+
+  const authTag = cipher.getAuthTag()
+  // Hint: if (decipherAes(enc, iv, authTag) != message) {
+
+  return [enc.toString('base64'), iv.toString('base64'), authTag.toString('base64')].join('--')
+}
+
 module.exports = {
   decipherRailCookies: decipherRailCookies,
   decipherSessionData: decipherSessionData,
   decipherCookies: decipherCookies,
-  decipherAes: decipherAes
+  decipherAes: decipherAes,
+  bakeCookie: bakeCookie
 }
